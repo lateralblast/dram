@@ -1,0 +1,1035 @@
+root@longhaul:~# megacli -EncInfo -aALL
+
+    Number of enclosures on adapter 0 -- 1
+
+    Enclosure 0:
+    Device ID                     : 32
+    Number of Slots               : 6
+    Number of Power Supplies      : 0
+    Number of Fans                : 0
+    Number of Temperature Sensors : 0
+    Number of Alarms              : 0
+    Number of SIM Modules         : 0
+    Number of Physical Drives     : 6
+    Status                        : Normal
+    Position                      : 0
+    Connector Name                : Unavailable
+    Enclosure type                : SES
+    FRU Part Number               : N/A
+    Enclosure Serial Number       : N/A
+    ESM Serial Number             : N/A
+    Enclosure Zoning Mode         : N/A
+    Partner Device Id             : 65535
+
+    Inquiry data                  :
+        Vendor Identification     : DP
+        Product Identification    : BACKPLANE
+        Product Revision Level    : 1.07
+        Vendor Specific           : 14F9F5O
+
+
+Exit Code: 0x00
+
+
+
+
+root@longhaul:~# megacli -CfgDsply -aAll
+
+==============================================================================
+Adapter: 0
+Product Name: PERC H700 Integrated
+Memory: 512MB
+BBU: Present
+Serial No: 15901UE
+==============================================================================
+Number of DISK GROUPS: 2
+
+DISK GROUP: 0
+Number of Spans: 1
+SPAN: 0
+Span Reference: 0x00
+Number of PDs: 2
+Number of VDs: 1
+Number of dedicated Hotspares: 0
+Virtual Drive Information:
+Virtual Drive: 0 (Target Id: 0)
+Name                :BOOT
+RAID Level          : Primary-1, Secondary-0, RAID Level Qualifier-0
+Size                : 446.625 GB
+Sector Size         : 512
+Mirror Data         : 446.625 GB
+State               : Optimal
+Strip Size          : 64 KB
+Number Of Drives    : 2
+Span Depth          : 1
+Default Cache Policy: WriteBack, ReadAdaptive, Direct, No Write Cache if Bad BBU
+Current Cache Policy: WriteBack, ReadAdaptive, Direct, No Write Cache if Bad BBU
+Default Access Policy: Read/Write
+Current Access Policy: Read/Write
+Disk Cache Policy   : Disk's Default
+Encryption Type     : None
+Bad Blocks Exist: No
+Is VD Cached: No
+Physical Disk Information:
+Physical Disk: 0
+Enclosure Device ID: 32
+Slot Number: 0
+Drive's position: DiskGroup: 0, Span: 0, Arm: 0
+Enclosure position: N/A
+Device Id: 0
+WWN: 0000000000000000
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+
+Raw Size: 447.130 GB [0x37e436b0 Sectors]
+Non Coerced Size: 446.630 GB [0x37d436b0 Sectors]
+Coerced Size: 446.625 GB [0x37d40000 Sectors]
+Sector Size:  0
+Firmware state: Online, Spun Up
+Device Firmware Level: R022
+Shield Counter: 0
+Successful diagnostics completion on :  N/A
+SAS Address(0): 0x4433221107000000
+Connected Port Number: 2(path0)
+Inquiry Data: 1932E1937E41        CT480BX500SSD1                           M6CR022
+FDE Capable: Not Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None
+Device Speed: 6.0Gb/s
+Link Speed: 6.0Gb/s
+Media Type: Solid State Device
+Drive:  Not Certified
+Drive Temperature : N/A
+PI Eligibility:  No
+Drive is formatted for PI information:  No
+PI: No PI
+Drive's NCQ setting : N/A
+Port-0 :
+Port status: Active
+Port's Linkspeed: 6.0Gb/s
+Drive has flagged a S.M.A.R.T alert : No
+
+
+
+Physical Disk: 1
+Enclosure Device ID: 32
+Slot Number: 1
+Drive's position: DiskGroup: 0, Span: 0, Arm: 1
+Enclosure position: N/A
+Device Id: 1
+WWN: 0000000000000000
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+
+Raw Size: 447.130 GB [0x37e436b0 Sectors]
+Non Coerced Size: 446.630 GB [0x37d436b0 Sectors]
+Coerced Size: 446.625 GB [0x37d40000 Sectors]
+Sector Size:  0
+Firmware state: Online, Spun Up
+Device Firmware Level: R022
+Shield Counter: 0
+Successful diagnostics completion on :  N/A
+SAS Address(0): 0x4433221106000000
+Connected Port Number: 1(path0)
+Inquiry Data: 1932E1937E3D        CT480BX500SSD1                           M6CR022
+FDE Capable: Not Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None
+Device Speed: 6.0Gb/s
+Link Speed: 6.0Gb/s
+Media Type: Solid State Device
+Drive:  Not Certified
+Drive Temperature : N/A
+PI Eligibility:  No
+Drive is formatted for PI information:  No
+PI: No PI
+Drive's NCQ setting : N/A
+Port-0 :
+Port status: Active
+Port's Linkspeed: 6.0Gb/s
+Drive has flagged a S.M.A.R.T alert : No
+
+
+
+SPANNED DISK GROUP: 0
+Number of Spans: 2
+SPAN: 0
+Span Reference: 0x01
+Number of PDs: 2
+Number of VDs: 1
+Number of dedicated Hotspares: 0
+Virtual Drive Information:
+Virtual Drive: 1 (Target Id: 1)
+Name                :DATA
+RAID Level          : Primary-1, Secondary-0, RAID Level Qualifier-0
+Size                : 7.276 TB
+Sector Size         : 512
+Mirror Data         : 7.276 TB
+State               : Optimal
+Strip Size          : 64 KB
+Number Of Drives per span:2
+Span Depth          : 2
+Default Cache Policy: WriteBack, ReadAdaptive, Direct, No Write Cache if Bad BBU
+Current Cache Policy: WriteBack, ReadAdaptive, Direct, No Write Cache if Bad BBU
+Default Access Policy: Read/Write
+Current Access Policy: Read/Write
+Disk Cache Policy   : Disk's Default
+Ongoing Progresses:
+  Background Initialization: Completed 10%, Taken 1067 min.
+Encryption Type     : None
+Bad Blocks Exist: No
+Is VD Cached: Yes
+Cache Cade Type : Read Only
+Physical Disk Information:
+Physical Disk: 0
+Enclosure Device ID: 32
+Slot Number: 2
+Drive's position: DiskGroup: 1, Span: 0, Arm: 0
+Enclosure position: N/A
+Device Id: 2
+WWN: 5000c500c086467e
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+
+Raw Size: 3.638 TB [0x1d1c0beb0 Sectors]
+Non Coerced Size: 3.637 TB [0x1d1b0beb0 Sectors]
+Coerced Size: 3.637 TB [0x1d1b00000 Sectors]
+Sector Size:  0
+Firmware state: Online, Spun Up
+Device Firmware Level: 0001
+Shield Counter: 0
+Successful diagnostics completion on :  N/A
+SAS Address(0): 0x4433221105000000
+Connected Port Number: 3(path0)
+Inquiry Data:             WCJ1TP2PST4000LM024-2AN17V                      0001
+FDE Capable: Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None
+Device Speed: 6.0Gb/s
+Link Speed: 6.0Gb/s
+Media Type: Hard Disk Device
+Drive:  Not Certified
+Drive Temperature : N/A
+PI Eligibility:  No
+Drive is formatted for PI information:  No
+PI: No PI
+Drive's NCQ setting : N/A
+Port-0 :
+Port status: Active
+Port's Linkspeed: 6.0Gb/s
+Drive has flagged a S.M.A.R.T alert : No
+
+
+
+Physical Disk: 1
+Enclosure Device ID: 32
+Slot Number: 3
+Drive's position: DiskGroup: 1, Span: 0, Arm: 1
+Enclosure position: N/A
+Device Id: 3
+WWN: 5000c500c0245ff1
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+
+Raw Size: 3.638 TB [0x1d1c0beb0 Sectors]
+Non Coerced Size: 3.637 TB [0x1d1b0beb0 Sectors]
+Coerced Size: 3.637 TB [0x1d1b00000 Sectors]
+Sector Size:  0
+Firmware state: Online, Spun Up
+Device Firmware Level: 0001
+Shield Counter: 0
+Successful diagnostics completion on :  N/A
+SAS Address(0): 0x4433221104000000
+Connected Port Number: 4(path0)
+Inquiry Data:             WFF0WR00ST4000LM024-2AN17V                      0001
+FDE Capable: Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None
+Device Speed: 6.0Gb/s
+Link Speed: 6.0Gb/s
+Media Type: Hard Disk Device
+Drive:  Not Certified
+Drive Temperature : N/A
+PI Eligibility:  No
+Drive is formatted for PI information:  No
+PI: No PI
+Drive's NCQ setting : N/A
+Port-0 :
+Port status: Active
+Port's Linkspeed: 6.0Gb/s
+Drive has flagged a S.M.A.R.T alert : No
+
+
+
+SPAN: 1
+Span Reference: 0x02
+Number of PDs: 2
+Number of VDs: 1
+Number of dedicated Hotspares: 0
+Virtual Drive Information:
+Virtual Drive: 1 (Target Id: 1)
+Name                :DATA
+RAID Level          : Primary-1, Secondary-0, RAID Level Qualifier-0
+Size                : 7.276 TB
+Sector Size         : 512
+Mirror Data         : 7.276 TB
+State               : Optimal
+Strip Size          : 64 KB
+Number Of Drives per span:2
+Span Depth          : 2
+Default Cache Policy: WriteBack, ReadAdaptive, Direct, No Write Cache if Bad BBU
+Current Cache Policy: WriteBack, ReadAdaptive, Direct, No Write Cache if Bad BBU
+Default Access Policy: Read/Write
+Current Access Policy: Read/Write
+Disk Cache Policy   : Disk's Default
+Ongoing Progresses:
+  Background Initialization: Completed 10%, Taken 1067 min.
+Encryption Type     : None
+Bad Blocks Exist: No
+Is VD Cached: Yes
+Cache Cade Type : Read Only
+Physical Disk Information:
+Physical Disk: 0
+Enclosure Device ID: 32
+Slot Number: 4
+Drive's position: DiskGroup: 1, Span: 1, Arm: 0
+Enclosure position: N/A
+Device Id: 4
+WWN: 5000c500c08808f2
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+
+Raw Size: 3.638 TB [0x1d1c0beb0 Sectors]
+Non Coerced Size: 3.637 TB [0x1d1b0beb0 Sectors]
+Coerced Size: 3.637 TB [0x1d1b00000 Sectors]
+Sector Size:  0
+Firmware state: Online, Spun Up
+Device Firmware Level: 0001
+Shield Counter: 0
+Successful diagnostics completion on :  N/A
+SAS Address(0): 0x4433221103000000
+Connected Port Number: 0(path0)
+Inquiry Data:             WCJ1S94QST4000LM024-2AN17V                      0001
+FDE Capable: Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None
+Device Speed: 6.0Gb/s
+Link Speed: 6.0Gb/s
+Media Type: Hard Disk Device
+Drive:  Not Certified
+Drive Temperature : N/A
+PI Eligibility:  No
+Drive is formatted for PI information:  No
+PI: No PI
+Drive's NCQ setting : N/A
+Port-0 :
+Port status: Active
+Port's Linkspeed: 6.0Gb/s
+Drive has flagged a S.M.A.R.T alert : No
+
+
+
+Physical Disk: 1
+Enclosure Device ID: 32
+Slot Number: 5
+Drive's position: DiskGroup: 1, Span: 1, Arm: 1
+Enclosure position: N/A
+Device Id: 5
+WWN: 5000c500bfc4f430
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+
+Raw Size: 3.638 TB [0x1d1c0beb0 Sectors]
+Non Coerced Size: 3.637 TB [0x1d1b0beb0 Sectors]
+Coerced Size: 3.637 TB [0x1d1b00000 Sectors]
+Sector Size:  0
+Firmware state: Online, Spun Up
+Device Firmware Level: 0001
+Shield Counter: 0
+Successful diagnostics completion on :  N/A
+SAS Address(0): 0x4433221102000000
+Connected Port Number: 5(path0)
+Inquiry Data:             WFG0THA7ST4000LM024-2AN17V                      0001
+FDE Capable: Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None
+Device Speed: 6.0Gb/s
+Link Speed: 6.0Gb/s
+Media Type: Hard Disk Device
+Drive:  Not Certified
+Drive Temperature : N/A
+PI Eligibility:  No
+Drive is formatted for PI information:  No
+PI: No PI
+Drive's NCQ setting : N/A
+Port-0 :
+Port status: Active
+Port's Linkspeed: 6.0Gb/s
+Drive has flagged a S.M.A.R.T alert : No
+
+
+
+
+Exit Code: 0x00
+
+root@longhaul:~# megacli -AdpBbuCmd -aALL
+
+BBU status for Adapter: 0
+
+BatteryType: BBU
+Voltage: 4077 mV
+Current: 0 mA
+Temperature: 21 C
+Battery State: Optimal
+BBU Firmware Status:
+
+  Charging Status              : None
+  Voltage                                 : OK
+  Temperature                             : OK
+  Learn Cycle Requested	                  : No
+  Learn Cycle Active                      : No
+  Learn Cycle Status                      : OK
+  Learn Cycle Timeout                     : No
+  I2c Errors Detected                     : No
+  Battery Pack Missing                    : No
+  Battery Replacement required            : No
+  Remaining Capacity Low                  : No
+  Periodic Learn Required                 : No
+  Transparent Learn                       : No
+  No space to cache offload               : No
+  Pack is about to fail & should be replaced : No
+  Cache Offload premium feature required  : No
+  Module microcode update required        : No
+
+
+GasGuageStatus:
+  Fully Discharged        : No
+  Fully Charged           : Yes
+  Discharging             : Yes
+  Initialized             : Yes
+  Remaining Time Alarm    : No
+  Discharge Terminated    : No
+  Over Temperature        : No
+  Charging Terminated     : Yes
+  Over Charged            : No
+Relative State of Charge: 100 %
+Charger Status: Complete
+Remaining Capacity: 1404 mAh
+Full Charge Capacity: 1406 mAh
+isSOHGood: Yes
+  Battery backup charge time : 0 hours
+
+BBU Capacity Info for Adapter: 0
+
+  Relative State of Charge: 100 %
+  Absolute State of charge: 78 %
+  Remaining Capacity: 1404 mAh
+  Full Charge Capacity: 1406 mAh
+  Run time to empty: Battery is not being charged.
+  Average time to empty: Battery is not being charged.
+  Estimated Time to full recharge: Battery is not being charged.
+  Cycle Count: 36
+Max Error = 2 %
+Remaining Capacity Alarm = 180 mAh
+Remining Time Alarm = 10 Min
+
+BBU Design Info for Adapter: 0
+
+  Date of Manufacture: 02/17, 2011
+  Design Capacity: 1800 mAh
+  Design Voltage: 3700 mV
+  Specification Info: 49
+  Serial Number: 73
+  Pack Stat Configuration: 0x0014
+  Manufacture Name: SMP-PA1.9
+  Firmware Version   : �
+  Device Name: DLFR463
+  Device Chemistry: LION
+  Battery FRU: N/A
+Module Version = �
+  Transparent Learn = 0
+  App Data = 0
+
+BBU Properties for Adapter: 0
+
+  Auto Learn Period: 90 Days
+  Next Learn time: Fri Jan  3 02:25:29 2020
+  Learn Delay Interval:0 Hours
+  Auto-Learn Mode: Enabled
+
+Exit Code: 0x00
+
+root@longhaul:~# megacli -LDInfo -LAll -aAll
+
+
+Adapter 0 -- Virtual Drive Information:
+Virtual Drive: 0 (Target Id: 0)
+Name                :BOOT
+RAID Level          : Primary-1, Secondary-0, RAID Level Qualifier-0
+Size                : 446.625 GB
+Sector Size         : 512
+Mirror Data         : 446.625 GB
+State               : Optimal
+Strip Size          : 64 KB
+Number Of Drives    : 2
+Span Depth          : 1
+Default Cache Policy: WriteBack, ReadAdaptive, Direct, No Write Cache if Bad BBU
+Current Cache Policy: WriteBack, ReadAdaptive, Direct, No Write Cache if Bad BBU
+Default Access Policy: Read/Write
+Current Access Policy: Read/Write
+Disk Cache Policy   : Disk's Default
+Encryption Type     : None
+Bad Blocks Exist: No
+Is VD Cached: No
+
+
+Virtual Drive: 1 (Target Id: 1)
+Name                :DATA
+RAID Level          : Primary-1, Secondary-0, RAID Level Qualifier-0
+Size                : 7.276 TB
+Sector Size         : 512
+Mirror Data         : 7.276 TB
+State               : Optimal
+Strip Size          : 64 KB
+Number Of Drives per span:2
+Span Depth          : 2
+Default Cache Policy: WriteBack, ReadAdaptive, Direct, No Write Cache if Bad BBU
+Current Cache Policy: WriteBack, ReadAdaptive, Direct, No Write Cache if Bad BBU
+Default Access Policy: Read/Write
+Current Access Policy: Read/Write
+Disk Cache Policy   : Disk's Default
+Ongoing Progresses:
+  Background Initialization: Completed 10%, Taken 1071 min.
+Encryption Type     : None
+Bad Blocks Exist: No
+Is VD Cached: Yes
+Cache Cade Type : Read Only
+
+
+
+Exit Code: 0x00
+
+root@longhaul:~# megacli -PDList -aall
+
+Adapter #0
+
+Enclosure Device ID: 32
+Slot Number: 0
+Drive's position: DiskGroup: 0, Span: 0, Arm: 0
+Enclosure position: N/A
+Device Id: 0
+WWN: 0000000000000000
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+
+Raw Size: 447.130 GB [0x37e436b0 Sectors]
+Non Coerced Size: 446.630 GB [0x37d436b0 Sectors]
+Coerced Size: 446.625 GB [0x37d40000 Sectors]
+Sector Size:  0
+Firmware state: Online, Spun Up
+Device Firmware Level: R022
+Shield Counter: 0
+Successful diagnostics completion on :  N/A
+SAS Address(0): 0x4433221107000000
+Connected Port Number: 2(path0)
+Inquiry Data: 1932E1937E41        CT480BX500SSD1                           M6CR022
+FDE Capable: Not Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None
+Device Speed: 6.0Gb/s
+Link Speed: 6.0Gb/s
+Media Type: Solid State Device
+Drive:  Not Certified
+Drive Temperature : N/A
+PI Eligibility:  No
+Drive is formatted for PI information:  No
+PI: No PI
+Drive's NCQ setting : N/A
+Port-0 :
+Port status: Active
+Port's Linkspeed: 6.0Gb/s
+Drive has flagged a S.M.A.R.T alert : No
+
+
+
+Enclosure Device ID: 32
+Slot Number: 1
+Drive's position: DiskGroup: 0, Span: 0, Arm: 1
+Enclosure position: N/A
+Device Id: 1
+WWN: 0000000000000000
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+
+Raw Size: 447.130 GB [0x37e436b0 Sectors]
+Non Coerced Size: 446.630 GB [0x37d436b0 Sectors]
+Coerced Size: 446.625 GB [0x37d40000 Sectors]
+Sector Size:  0
+Firmware state: Online, Spun Up
+Device Firmware Level: R022
+Shield Counter: 0
+Successful diagnostics completion on :  N/A
+SAS Address(0): 0x4433221106000000
+Connected Port Number: 1(path0)
+Inquiry Data: 1932E1937E3D        CT480BX500SSD1                           M6CR022
+FDE Capable: Not Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None
+Device Speed: 6.0Gb/s
+Link Speed: 6.0Gb/s
+Media Type: Solid State Device
+Drive:  Not Certified
+Drive Temperature : N/A
+PI Eligibility:  No
+Drive is formatted for PI information:  No
+PI: No PI
+Drive's NCQ setting : N/A
+Port-0 :
+Port status: Active
+Port's Linkspeed: 6.0Gb/s
+Drive has flagged a S.M.A.R.T alert : No
+
+
+
+Enclosure Device ID: 32
+Slot Number: 2
+Drive's position: DiskGroup: 1, Span: 0, Arm: 0
+Enclosure position: N/A
+Device Id: 2
+WWN: 5000c500c086467e
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+
+Raw Size: 3.638 TB [0x1d1c0beb0 Sectors]
+Non Coerced Size: 3.637 TB [0x1d1b0beb0 Sectors]
+Coerced Size: 3.637 TB [0x1d1b00000 Sectors]
+Sector Size:  0
+Firmware state: Online, Spun Up
+Device Firmware Level: 0001
+Shield Counter: 0
+Successful diagnostics completion on :  N/A
+SAS Address(0): 0x4433221105000000
+Connected Port Number: 3(path0)
+Inquiry Data:             WCJ1TP2PST4000LM024-2AN17V                      0001
+FDE Capable: Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None
+Device Speed: 6.0Gb/s
+Link Speed: 6.0Gb/s
+Media Type: Hard Disk Device
+Drive:  Not Certified
+Drive Temperature : N/A
+PI Eligibility:  No
+Drive is formatted for PI information:  No
+PI: No PI
+Drive's NCQ setting : N/A
+Port-0 :
+Port status: Active
+Port's Linkspeed: 6.0Gb/s
+Drive has flagged a S.M.A.R.T alert : No
+
+
+
+Enclosure Device ID: 32
+Slot Number: 3
+Drive's position: DiskGroup: 1, Span: 0, Arm: 1
+Enclosure position: N/A
+Device Id: 3
+WWN: 5000c500c0245ff1
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+
+Raw Size: 3.638 TB [0x1d1c0beb0 Sectors]
+Non Coerced Size: 3.637 TB [0x1d1b0beb0 Sectors]
+Coerced Size: 3.637 TB [0x1d1b00000 Sectors]
+Sector Size:  0
+Firmware state: Online, Spun Up
+Device Firmware Level: 0001
+Shield Counter: 0
+Successful diagnostics completion on :  N/A
+SAS Address(0): 0x4433221104000000
+Connected Port Number: 4(path0)
+Inquiry Data:             WFF0WR00ST4000LM024-2AN17V                      0001
+FDE Capable: Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None
+Device Speed: 6.0Gb/s
+Link Speed: 6.0Gb/s
+Media Type: Hard Disk Device
+Drive:  Not Certified
+Drive Temperature : N/A
+PI Eligibility:  No
+Drive is formatted for PI information:  No
+PI: No PI
+Drive's NCQ setting : N/A
+Port-0 :
+Port status: Active
+Port's Linkspeed: 6.0Gb/s
+Drive has flagged a S.M.A.R.T alert : No
+
+
+
+Enclosure Device ID: 32
+Slot Number: 4
+Drive's position: DiskGroup: 1, Span: 1, Arm: 0
+Enclosure position: N/A
+Device Id: 4
+WWN: 5000c500c08808f2
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+
+Raw Size: 3.638 TB [0x1d1c0beb0 Sectors]
+Non Coerced Size: 3.637 TB [0x1d1b0beb0 Sectors]
+Coerced Size: 3.637 TB [0x1d1b00000 Sectors]
+Sector Size:  0
+Firmware state: Online, Spun Up
+Device Firmware Level: 0001
+Shield Counter: 0
+Successful diagnostics completion on :  N/A
+SAS Address(0): 0x4433221103000000
+Connected Port Number: 0(path0)
+Inquiry Data:             WCJ1S94QST4000LM024-2AN17V                      0001
+FDE Capable: Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None
+Device Speed: 6.0Gb/s
+Link Speed: 6.0Gb/s
+Media Type: Hard Disk Device
+Drive:  Not Certified
+Drive Temperature : N/A
+PI Eligibility:  No
+Drive is formatted for PI information:  No
+PI: No PI
+Drive's NCQ setting : N/A
+Port-0 :
+Port status: Active
+Port's Linkspeed: 6.0Gb/s
+Drive has flagged a S.M.A.R.T alert : No
+
+
+
+Enclosure Device ID: 32
+Slot Number: 5
+Drive's position: DiskGroup: 1, Span: 1, Arm: 1
+Enclosure position: N/A
+Device Id: 5
+WWN: 5000c500bfc4f430
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+
+Raw Size: 3.638 TB [0x1d1c0beb0 Sectors]
+Non Coerced Size: 3.637 TB [0x1d1b0beb0 Sectors]
+Coerced Size: 3.637 TB [0x1d1b00000 Sectors]
+Sector Size:  0
+Firmware state: Online, Spun Up
+Device Firmware Level: 0001
+Shield Counter: 0
+Successful diagnostics completion on :  N/A
+SAS Address(0): 0x4433221102000000
+Connected Port Number: 5(path0)
+Inquiry Data:             WFG0THA7ST4000LM024-2AN17V                      0001
+FDE Capable: Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None
+Device Speed: 6.0Gb/s
+Link Speed: 6.0Gb/s
+Media Type: Hard Disk Device
+Drive:  Not Certified
+Drive Temperature : N/A
+PI Eligibility:  No
+Drive is formatted for PI information:  No
+PI: No PI
+Drive's NCQ setting : N/A
+Port-0 :
+Port status: Active
+Port's Linkspeed: 6.0Gb/s
+Drive has flagged a S.M.A.R.T alert : No
+
+
+
+
+Exit Code: 0x00
+
+root@longhaul:~# lshw -class disk
+  *-disk:0
+       description: SCSI Disk
+       product: PERC H700
+       vendor: DELL
+       physical id: 2.0.0
+       bus info: scsi@2:2.0.0
+       logical name: /dev/sda
+       version: 2.10
+       serial: 00cdf82b928a7e2a25008a7f39b0bc82
+       size: 446GiB (479GB)
+       capabilities: partitioned partitioned:dos
+       configuration: ansiversion=5 logicalsectorsize=512 sectorsize=512 signature=59313b48
+  *-disk:1
+       description: SCSI Disk
+       product: PERC H700
+       vendor: DELL
+       physical id: 2.1.0
+       bus info: scsi@2:2.1.0
+       logical name: /dev/sdb
+       version: 2.10
+       serial: 000d45749c367f2a25008a7f39b0bc82
+       size: 7451GiB (8TB)
+       capabilities: gpt-1.00 partitioned partitioned:gpt
+       configuration: ansiversion=5 guid=d48ac4df-3ed2-43e6-b1dc-f1758df73513 logicalsectorsize=512 sectorsize=512
+  *-cdrom
+       description: DVD-RAM writer
+       product: DVD+-RW TS-L633J
+       vendor: TSSTcorp
+       physical id: 0.0.0
+       bus info: scsi@0:0.0.0
+       logical name: /dev/cdrom
+       logical name: /dev/cdrw
+       logical name: /dev/dvd
+       logical name: /dev/dvdrw
+       logical name: /dev/sr0
+       version: D150
+       capabilities: removable audio cd-r cd-rw dvd dvd-r dvd-ram
+       configuration: ansiversion=5 status=nodisc
+
+root@longhaul:~# lshw -class disk -json
+                                                                                                                                                                                                                                                                                                                                  {
+    "id" : "disk:0",
+    "class" : "disk",
+    "claimed" : true,
+    "handle" : "SCSI:02:02:00:00",
+    "description" : "SCSI Disk",
+    "product" : "PERC H700",
+    "vendor" : "DELL",
+    "physid" : "2.0.0",
+    "businfo" : "scsi@2:2.0.0",
+    "logicalname" : "/dev/sda",
+    "dev" : "8:0",
+    "version" : "2.10",
+    "serial" : "00cdf82b928a7e2a25008a7f39b0bc82",
+    "units" : "bytes",
+    "size" : 479559942144,
+    "configuration" : {
+      "ansiversion" : "5",
+      "logicalsectorsize" : "512",
+      "sectorsize" : "512",
+      "signature" : "59313b48"
+    },
+    "capabilities" : {
+      "partitioned" : "Partitioned disk",
+      "partitioned:dos" : "MS-DOS partition table"
+    },
+    "children" : [
+
+    ]
+  },
+      {
+    "id" : "disk:1",
+    "class" : "disk",
+    "claimed" : true,
+    "handle" : "GUID:d48ac4df-3ed2-43e6-b1dc-f1758df73513",
+    "description" : "SCSI Disk",
+    "product" : "PERC H700",
+    "vendor" : "DELL",
+    "physid" : "2.1.0",
+    "businfo" : "scsi@2:2.1.0",
+    "logicalname" : "/dev/sdb",
+    "dev" : "8:16",
+    "version" : "2.10",
+    "serial" : "000d45749c367f2a25008a7f39b0bc82",
+    "units" : "bytes",
+    "size" : 8000450330624,
+    "configuration" : {
+      "ansiversion" : "5",
+      "guid" : "d48ac4df-3ed2-43e6-b1dc-f1758df73513",
+      "logicalsectorsize" : "512",
+      "sectorsize" : "512"
+    },
+    "capabilities" : {
+      "gpt-1.00" : "GUID Partition Table version 1.00",
+      "partitioned" : "Partitioned disk",
+      "partitioned:gpt" : "GUID partition table"
+    },
+    "children" : [
+
+    ]
+  }                                                                                                                                                                                                                                                                                                                                                                              {
+    "id" : "cdrom",
+    "class" : "disk",
+    "claimed" : true,
+    "handle" : "SCSI:00:00:00:00",
+    "description" : "DVD-RAM writer",
+    "product" : "DVD+-RW TS-L633J",
+    "vendor" : "TSSTcorp",
+    "physid" : "0.0.0",
+    "businfo" : "scsi@0:0.0.0",
+    "logicalname" : ["/dev/cdrom", "/dev/cdrw", "/dev/dvd", "/dev/dvdrw", "/dev/sr0"],
+    "dev" : "11:0",
+    "version" : "D150",
+    "configuration" : {
+      "ansiversion" : "5",
+      "status" : "nodisc"
+    },
+    "capabilities" : {
+      "removable" : "support is removable",
+      "audio" : "Audio CD playback",
+      "cd-r" : "CD-R burning",
+      "cd-rw" : "CD-RW burning",
+      "dvd" : "DVD playback",
+      "dvd-r" : "DVD-R burning",
+      "dvd-ram" : "DVD-RAM burning"
+    }
+  }
+
+root@longhaul:~# lshw -class disk -businfo
+Bus info          Device      Class      Description
+====================================================
+scsi@2:2.0.0      /dev/sda    disk       479GB PERC H700
+scsi@2:2.1.0      /dev/sdb    disk       8TB PERC H700
+scsi@0:0.0.0      /dev/cdrom  disk       DVD+-RW TS-L633J
+
+root@longhaul:~# cat /etc/fstab
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+/dev/mapper/longhaul--vg-root /               ext4    errors=remount-ro 0       1
+/dev/mapper/longhaul--vg-swap_1 none            swap    sw              0       0
+/dev/mapper/longhaul--data--vg-net /net               ext4    errors=remount-ro 0       1
+
+root@longhaul:~# fdisk -l
+Disk /dev/sda: 446.6 GiB, 479559942144 bytes, 936640512 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x59313b48
+
+Device     Boot Start       End   Sectors   Size Id Type
+/dev/sda1  *     2048 936638463 936636416 446.6G 8e Linux LVM
+
+
+Disk /dev/sdb: 7.3 TiB, 8000450330624 bytes, 15625879552 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: D48AC4DF-3ED2-43E6-B1DC-F1758DF73513
+
+Device     Start         End     Sectors  Size Type
+/dev/sdb1   2048 15625877503 15625875456  7.3T Linux LVM
+
+
+Disk /dev/mapper/longhaul--vg-root: 445.7 GiB, 478528143360 bytes, 934625280 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/mapper/longhaul--vg-swap_1: 980 MiB, 1027604480 bytes, 2007040 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/mapper/longhaul--data--vg-net: 7.3 TiB, 8000446136320 bytes, 15625871360 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+root@longhaul:~# lvscan
+  ACTIVE            '/dev/longhaul-data-vg/net' [<7.28 TiB] inherit
+  ACTIVE            '/dev/longhaul-vg/root' [445.66 GiB] inherit
+  ACTIVE            '/dev/longhaul-vg/swap_1' [980.00 MiB] inherit
+
+  root@longhaul:~# pvscan
+  PV /dev/sdb1   VG longhaul-data-vg   lvm2 [<7.28 TiB / 0    free]
+  PV /dev/sda1   VG longhaul-vg        lvm2 [446.62 GiB / 0    free]
+  Total: 2 [7.71 TiB] / in use: 2 [7.71 TiB] / in no VG: 0 [0   ]
+
+  

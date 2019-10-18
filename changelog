@@ -1,0 +1,33 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project tries to adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.0.1] - 2019-10-17
+
+### Added
+
+- Thu 17 Oct 09:46
+  Initial base script
+
+## [0.0.2] - 2019-10-17
+
+### Added
+
+- Thu 17 Oct 18:17
+  Added help, version, list and LSI package install code
+
+## [0.0.3] - 2019-10-18
+
+### Added
+
+- Fri 18 Oct 01:24:36 AEDT 2019
+  Added basic Optimal check
+
+## [0.0.4] - 2019-10-18
+
+### Changed
+
+- Fri 18 Oct 2019 14:24:48 AEDT
+  Moved email and Slack alert information to files so addresses are not in script  
