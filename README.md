@@ -19,7 +19,9 @@ Current Supported RAID controllers:
 
 - PERC H700
 
-Tis is the begining of updating/rewriting some old scripts to utilise updated tools such as lshw.
+This is the begining of updating/rewriting some old scripts to utilise updated tools such as lshw.
+
+The slack hook and email address information are read from files so that the information does not appear in the script.
 
 Supported Operating Systems
 ---------------------------
