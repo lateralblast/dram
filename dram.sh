@@ -32,7 +32,7 @@ start_path=`pwd`
 app_vers=`cd $start_path ; cat $0 | grep '^# Version' |awk '{print $3}'`
 app_name=`cd $start_path ; cat $0 | grep '^# Name' |awk '{for (i=3;i<=NF;++i) printf $i" "}'`
 app_pkgr=`cd $start_path ; cat $0 | grep '^# Packager' |awk '{for (i=3;i<=NF;++i) printf $i" "}'`
-app_help=`cd $start_path ; cat $0 | grep -A1 " [A-Z,a-z])$" |sed 's/#//g'`
+app_help=`cd $start_path ; cat $0 | grep -A1 " [A-Z,a-z])$" |sed 's/[#,--]//g'`
 
 # Set up directory for storing Slack hook etc
 

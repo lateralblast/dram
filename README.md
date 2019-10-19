@@ -71,19 +71,14 @@ Usage Information:
 
     V)
        Display Version
---
     f)
        Create false alerts
---
     h)
        Display Usage Information
---
     s)
        Use Slack to post alerts
---
     m)
        Email alerts
---
     l)
        List devices
 ```
