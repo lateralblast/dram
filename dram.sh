@@ -16,7 +16,7 @@
 
 # Set some defaults
 
-host_name=`hostname`
+host_name=$(hostname)
 do_slack="no"
 do_list="no"
 do_email="no"
@@ -25,14 +25,14 @@ megacli="/opt/MegaRAID/MegaCli/MegaCli64"
 
 # Get the path the script starts from
 
-start_path=`pwd`
+start_path=$(pwd)
 
 # Get the script info from the script itself
 
-app_vers=`cd $start_path ; cat $0 | grep '^# Version' |awk '{print $3}'`
-app_name=`cd $start_path ; cat $0 | grep '^# Name' |awk '{for (i=3;i<=NF;++i) printf $i" "}'`
-app_pkgr=`cd $start_path ; cat $0 | grep '^# Packager' |awk '{for (i=3;i<=NF;++i) printf $i" "}'`
-app_help=`cd $start_path ; cat $0 | grep -A1 " [A-Z,a-z])$" |sed 's/[#,--]//g'`
+app_vers=$(cd "$start_path" || exit ; grep "^# Version" "$0" |awk '{print $3}')
+app_name=$(cd "$start_path" || exit ; grep "^# Name" "$0" |awk '{for (i=3;i<=NF;++i) printf $i" "}')
+app_pkgr=$(cd "$start_path" || exit ; grep "^# Packager" "$0" |awk '{for (i=3;i<=NF;++i) printf $i" "}')
+app_help=$(cd "$start_path" || exit ; grep -A1 " [A-Z,a-z])$" "$0" |sed "s/[#,\-\-]//g" |sed '/^\s*$/d')
 
 # Set up directory for storing Slack hook etc
 
@@ -42,7 +42,7 @@ slack_file="$dram_dir/slack_hook_file"
 email_file="$dram_dir/email_list_file"
 
 if [ ! -d "$dram_dir" ]; then
-  mkdir -p $dram_dir
+  mkdir -p "$dram_dir"
 fi
 
 # Print some help
@@ -61,24 +61,30 @@ print_help() {
 # Install check
 
 install_check() {
-  if [ -z `which mail` ]; then
+  if [ -z "$(command -v mail)" ]; then
     sudo apt-get install -y mailutils
   fi
+  if [ -z "$(command -v lsscsi)" ]; then
+    sudo apt-get install -y lsscsi
+  fi
   if [ ! -f "$megacli" ]; then
-    cd /tmp
+    cd /tmp || exit
     if [ ! -f "/tmp/8-07-14_MegaCLI.zip" ]; then
-      wget wget https://docs.broadcom.com/docs-and-downloads/raid-controllers/raid-controllers-common-files/8-07-14_MegaCLI.zip
+      wget https://docs.broadcom.com/docs-and-downloads/raid-controllers/raid-controllers-common-files/8-07-14_MegaCLI.zip
     fi
-    if [ -z `which alien` ]; then
+    if [ -z "$(command -v alien)" ]; then
       sudo apt-get install -y alien
     fi
-    if [ -z `which unzip` ]; then
+    if [ -z "$(command -v unzip)" ]; then
       sudo apt-get install -y unzip
     fi
     unzip 8-07-14_MegaCLI.zip
-    cd Linux
+    cd Linux || exit
     alien MegaCli-8.07.14-1.noarch.rpm
     sudo dpkg -i megacli_8.07.14-2_all.deb
+  fi
+  if [ ! -e "/usr/bin/megacli" ];  then
+    sudo sh -c "ln -s $megacli /usr/bin/megacli"
   fi
 }
 
@@ -87,10 +93,10 @@ install_check() {
 handle_alert() {
   device=$1
   if [ "$do_slack" = "yes" ]; then
-    curl -X POST -H 'Content-type: application/json' --data "{'text':'Warning $device on $host_name is not optimal'}" $slack_hook
+    curl -X POST -H 'Content-type: application/json' --data "{'text':'Warning $device on $host_name is not optimal'}" "$slack_hook"
   fi
   if [ "$do_email" = "yes" ]; then
-    echo "Warning $device on $host_name is not Optimal" | mail -s "Warning $device on $host_name is not optimal" $alert_email
+    echo "Warning $device on $host_name is not Optimal" | mail -s "Warning $device on $host_name is not optimal" "$alert_email"
   fi
   return
 }
@@ -99,35 +105,33 @@ handle_alert() {
 
 list_devices() {
   install_check
-  sudo lshw -class disk -businfo |grep "PERC" | while read line ; do
-    device=`echo "$line" |awk '{print $2}'`
-    fstab=`cat /etc/fstab |grep "$device"`
+  sudo sh -c "lsscsi -d |grep \"PERC\" |awk '{print \$1\":\"\$7}' |sed 's/\[//g' |sed 's/\]//g'" | while read -r line ; do
+    devnum=$(echo "$line" |cut -f3 -d:)
+    device=$(echo "$line" |cut -f5 -d:)
+    fstab=$(grep "$device" /etc/fstab || exit)
     echo "Device: $device"
     if [ -z "$fstab" ]; then
       printf "Filesystem: "
-      sudo pvscan |grep "$device" |awk '{print $4}' |while read volume; do
-      	sudo lvscan |grep "$volume" |awk '{print $2}' |sed "s/'//g" |while read fstab; do
-	  printf "$fstab "
+      sudo sh -c "pvscan |grep \"$device\" |awk '{print \$4}'" |while read -r volume; do
+      	sudo sh -c "lvscan |grep \"$volume\" |awk '{print \$2}'" |sed "s/'//g" |while read -r entry; do
+          printf "%s " "$entry"
         done
       done
       printf "\n"
     else
       echo "Filesystem: $fstab"
     fi
-    vdisk=`sudo lshw -class disk -businfo |grep "PERC" |grep "$device" |awk '{print $1}' |cut -f2 -d: |cut -f2 -d.`
-    sudo $megacli -LDInfo -L$vdisk -aAll |sed "s/: /:/g" |grep ":" |egrep -v "^Adapter|^Exit" |tr -s '[:blank:]' ' ' |sed "s/ :/:/g" |sed "s/:/: /g" |while read info; do
-      if [ -z "`echo "$info" |grep "^State"`" ]; then
-	echo "$info"
-      else
-        if [ -z "`echo "$info" |grep '^State' |grep Optimal`" ]; then
-	  handle_alert $device
-	else
-	  if [ "$do_false" = "yes" ]; then
-	    handle_alert $device
+    sudo sh -c "$megacli -LDInfo -L\"$devnum\" -aAll |sed \"s/: /:/g\" |grep \":\" |grep -Ev \"^Adapter|^Exit\" |tr -s '[:blank:]' ' ' |sed \"s/ :/:/g\" |sed \"s/:/: /g\"" |while read -r info; do
+      if echo "$info" |grep "^State" ; then
+        if echo "$info" |grep "^State" |grep "Optimal"; then
+	        handle_alert "$device"
+	      else
+	        if [ "$do_false" = "yes" ]; then
+	          handle_alert "$device"
           fi
 	fi
-        echo "$info"
       fi
+      echo "$info"
     done
   done
   return
@@ -172,7 +176,7 @@ done
 
 if [ "$do_slack" = "yes" ]; then
   if [ -f "$slack_file" ] ; then
-    slack_hook=`cat $slack_file`
+    slack_hook=$(cat "$slack_file")
   else
     echo "Warning Slack hook file $slack_file does not exist"
     exit
@@ -181,7 +185,7 @@ fi
 
 if [ "$do_email" = "yes" ]; then
   if [ -f "$email_file" ] ; then
-    alert_email=`cat $email_file`
+    alert_email=$(cat "$email_file")
   else
     echo "Warning email alert list file $email_file does not exist"
     exit
@@ -195,7 +199,7 @@ fi
 
 # If given no command line arguments print usage information
 
-if [ `expr "$args" : "\-"` != 1 ]; then
+if expr "$opt" : "\-" != 1; then
   print_help
   exit
 fi

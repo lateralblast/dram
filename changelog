@@ -31,3 +31,17 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 - Fri 18 Oct 2019 14:24:48 AEDT
   Moved email and Slack alert information to files so addresses are not in script  
+
+### Changed
+
+## [0.0.5] - 2019-10-19
+
+- Sun 20 Oct 15:35:29 AEDT 2019
+  Implemented shellcheck recommendation
+
+### Added
+
+## [0.0.5] - 2019-10-19
+
+- Sun 20 Oct 15:38:25 AEDT 2019
+  Added download of megaclisas-status with intention to replace lshw as lshw seems unreliable
