@@ -113,7 +113,7 @@ list_devices() {
     if [ -z "$fstab" ]; then
       printf "Filesystem: "
       sudo sh -c "pvscan |grep \"$device\" |awk '{print \$4}'" |while read -r volume; do
-      	sudo sh -c "lvscan |grep \"$volume\" |awk '{print \$2}'" |sed "s/'//g" |while read -r entry; do
+        sudo sh -c "lvscan |grep \"$volume\" |awk '{print \$2}'" |sed "s/'//g" |while read -r entry; do
           printf "%s " "$entry"
         done
       done
@@ -124,12 +124,12 @@ list_devices() {
     sudo sh -c "$megacli -LDInfo -L\"$devnum\" -aAll |sed \"s/: /:/g\" |grep \":\" |grep -Ev \"^Adapter|^Exit\" |tr -s '[:blank:]' ' ' |sed \"s/ :/:/g\" |sed \"s/:/: /g\"" |while read -r info; do
       if echo "$info" |grep "^State" ; then
         if echo "$info" |grep "^State" |grep "Optimal"; then
-	        handle_alert "$device"
-	      else
-	        if [ "$do_false" = "yes" ]; then
-	          handle_alert "$device"
+          handle_alert "$device"
+        else
+          if [ "$do_false" = "yes" ]; then
+            handle_alert "$device"
           fi
-	fi
+        fi
       fi
       echo "$info"
     done
