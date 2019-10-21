@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Name:         dram (Disk Raid Automated/Alert Monitoring)
-# Version:      0.0.4
+# Name:         dram (Disk RAID Automated/Alert Monitoring)
+# Version:      0.0.6
 # Release:      1
 # License:      CC-BA (Creative Commons By Attribution)
 #               http://creativecommons.org/licenses/by/4.0/legalcode
@@ -12,7 +12,7 @@
 # Vendor:       UNIX
 # Packager:     Richard Spindler <richard@lateralblast.com.au>
 # Description:  Shell script
-#               Written in bourne shell so it can be run on different releases
+#               Written in bash so it can be run on different releases
 
 # Set some defaults
 
@@ -174,6 +174,8 @@ while getopts "Vhsmlf" opt; do
   esac
 done
 
+# Handle Slack hook
+
 if [ "$do_slack" = "yes" ]; then
   if [ -f "$slack_file" ] ; then
     slack_hook=$(cat "$slack_file")
@@ -183,6 +185,8 @@ if [ "$do_slack" = "yes" ]; then
   fi
 fi
 
+#Handle alert email address
+
 if [ "$do_email" = "yes" ]; then
   if [ -f "$email_file" ] ; then
     alert_email=$(cat "$email_file")
@@ -191,6 +195,8 @@ if [ "$do_email" = "yes" ]; then
     exit
   fi
 fi
+
+# Handle list
 
 if [ "$do_list" = "yes" ]; then
   list_devices
