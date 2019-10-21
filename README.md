@@ -49,6 +49,7 @@ The script will attempt to install required supported packages if they are not a
   - LSI MegaCLI
   - alien (to convert LSI MegaCLI RPM)
   - unzip
+  - lsscsi
 
 License
 -------
