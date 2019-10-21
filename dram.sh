@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Name:         dram (Disk RAID Automated/Alert Monitoring)
-# Version:      0.0.6
+# Version:      0.0.7
 # Release:      1
 # License:      CC-BA (Creative Commons By Attribution)
 #               http://creativecommons.org/licenses/by/4.0/legalcode
@@ -58,25 +58,13 @@ print_help() {
   return
 }
 
-# Install check
+# LSI install check
 
-install_check() {
-  if [ -z "$(command -v mail)" ]; then
-    sudo apt-get install -y mailutils
-  fi
-  if [ -z "$(command -v lsscsi)" ]; then
-    sudo apt-get install -y lsscsi
-  fi
+lsi_install_check() {
   if [ ! -f "$megacli" ]; then
     cd /tmp || exit
     if [ ! -f "/tmp/8-07-14_MegaCLI.zip" ]; then
       wget https://docs.broadcom.com/docs-and-downloads/raid-controllers/raid-controllers-common-files/8-07-14_MegaCLI.zip
-    fi
-    if [ -z "$(command -v alien)" ]; then
-      sudo apt-get install -y alien
-    fi
-    if [ -z "$(command -v unzip)" ]; then
-      sudo apt-get install -y unzip
     fi
     unzip 8-07-14_MegaCLI.zip
     cd Linux || exit
@@ -86,6 +74,25 @@ install_check() {
   if [ ! -e "/usr/bin/megacli" ];  then
     sudo sh -c "ln -s $megacli /usr/bin/megacli"
   fi
+  return
+}
+
+# Install check
+
+install_check() {
+  if [ -z "$(command -v alien)" ]; then
+    sudo apt-get install -y alien
+  fi
+  if [ -z "$(command -v unzip)" ]; then
+    sudo apt-get install -y unzip
+  fi
+  if [ -z "$(command -v mail)" ]; then
+    sudo apt-get install -y mailutils
+  fi
+  if [ -z "$(command -v lsscsi)" ]; then
+    sudo apt-get install -y lsscsi
+  fi
+  return
 }
 
 # Handle alert
@@ -105,7 +112,10 @@ handle_alert() {
 
 list_devices() {
   install_check
-  sudo sh -c "lsscsi -d |grep \"PERC\" |awk '{print \$1\":\"\$7}' |sed 's/\[//g' |sed 's/\]//g'" | while read -r line ; do
+  sudo sh -c "lsscsi -d |grep -Ei \"PERC|RAID\" |awk '{print \$1\":\"\$7}' |sed 's/\[//g' |sed 's/\]//g'" | while read -r line ; do
+    if echo "$line" |grep -Ei "PERC|MegaRAID"; then
+      lsi_install_check
+    fi
     devnum=$(echo "$line" |cut -f3 -d:)
     device=$(echo "$line" |cut -f5 -d:)
     fstab=$(grep "$device" /etc/fstab || exit)
