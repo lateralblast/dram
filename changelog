@@ -59,4 +59,10 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 - Tue 22 Oct 2019 09:38:27 AEDT
   Started breaking out install check into controller specific checks
-  
+
+### Added
+
+### [0.0.8] - 2019-10-24
+
+- Thu 24 Oct 2019 14:14:59 AEDT
+  Added initial support for LSI based ServeRAID and Intel controllers

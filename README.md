@@ -17,7 +17,10 @@ Features
 
 Current Supported RAID controllers:
 
-- PERC H700
+- LSI MegaRAID based controllers
+  - PERC H700
+  - ServeRAID
+  - Intel
 
 This is the begining of updating/rewriting some old scripts to utilise updated tools such as lshw.
 

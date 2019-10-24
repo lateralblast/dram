@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Name:         dram (Disk RAID Automated/Alert Monitoring)
-# Version:      0.0.7
+# Version:      0.0.8
 # Release:      1
 # License:      CC-BA (Creative Commons By Attribution)
 #               http://creativecommons.org/licenses/by/4.0/legalcode
@@ -113,8 +113,14 @@ handle_alert() {
 list_devices() {
   install_check
   sudo sh -c "lsscsi -d |grep -Ei \"PERC|RAID\" |awk '{print \$1\":\"\$7}' |sed 's/\[//g' |sed 's/\]//g'" | while read -r line ; do
-    if echo "$line" |grep -Ei "PERC|MegaRAID"; then
+    if echo "$line" |grep -Ei "PERC|MegaRAID|RD2|TD2|TS4"; then
       lsi_install_check
+    else
+      if echo "$line" |grep -Ei "ServeRAID"; then
+        if echo "$line" |grep -Ei "M51|M50|M10|MR10"; then
+          lsi_install_check
+        fi
+      fi
     fi
     devnum=$(echo "$line" |cut -f3 -d:)
     device=$(echo "$line" |cut -f5 -d:)
