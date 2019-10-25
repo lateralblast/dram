@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Name:         dram (Disk RAID Automated/Alert Monitoring)
-# Version:      0.0.8
+# Version:      0.0.9
 # Release:      1
 # License:      CC-BA (Creative Commons By Attribution)
 #               http://creativecommons.org/licenses/by/4.0/legalcode
@@ -40,10 +40,31 @@ home_dir=$HOME
 dram_dir="$home_dir/.dram"
 slack_file="$dram_dir/slack_hook_file"
 email_file="$dram_dir/email_list_file"
+os_name=$(uname)
+
+# Create config directory if not present
 
 if [ ! -d "$dram_dir" ]; then
   mkdir -p "$dram_dir"
 fi
+
+# Work out which package manager to use
+
+if [ -f "/etc/redhat-release" ]; then
+  pkg_bin="yum"
+else
+  pkg_bin="apt-get"
+fi
+
+# Check we are running on a supported OS
+
+os_check() {
+  if [ ! "$os_name" = "Linux" ] ; then
+    echo "Currently only Linux is supported"
+    exit
+  fi
+  return
+}
 
 # Print some help
 
@@ -68,8 +89,12 @@ lsi_install_check() {
     fi
     unzip 8-07-14_MegaCLI.zip
     cd Linux || exit
-    alien MegaCli-8.07.14-1.noarch.rpm
-    sudo dpkg -i megacli_8.07.14-2_all.deb
+    if [ "$pkg_bin" = "yum" ] ; then
+      sudo $pkg_bin -i MegaCli-8.07.14-1.noarch.rpm
+    else
+      alien MegaCli-8.07.14-1.noarch.rpm
+      sudo $pkg_bin -i megacli_8.07.14-2_all.deb
+    fi
   fi
   if [ ! -e "/usr/bin/megacli" ];  then
     sudo sh -c "ln -s $megacli /usr/bin/megacli"
@@ -80,17 +105,20 @@ lsi_install_check() {
 # Install check
 
 install_check() {
-  if [ -z "$(command -v alien)" ]; then
-    sudo apt-get install -y alien
+  os_check
+  if [ ! "$pkg_bin" = "yum" ] ; then
+    if [ -z "$(command -v alien)" ]; then
+      sudo $pkg_bin install -y alien
+    fi
   fi
   if [ -z "$(command -v unzip)" ]; then
-    sudo apt-get install -y unzip
+    sudo $pkg_bin install -y unzip
   fi
   if [ -z "$(command -v mail)" ]; then
-    sudo apt-get install -y mailutils
+    sudo $pkg_bin install -y mailutils
   fi
   if [ -z "$(command -v lsscsi)" ]; then
-    sudo apt-get install -y lsscsi
+    sudo $pkg_bin install -y lsscsi
   fi
   return
 }
