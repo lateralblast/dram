@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Name:         dram (Disk RAID Automated/Alert Monitoring)
-# Version:      0.1.3
+# Version:      0.1.4
 # Release:      1
 # License:      CC-BA (Creative Commons By Attribution)
 #               http://creativecommons.org/licenses/by/4.0/legalcode
@@ -22,7 +22,7 @@ do_list="no"
 do_email="no"
 do_false="no"
 megacli="/opt/MegaRAID/MegaCli/MegaCli64"
-auto_update="yes"
+do_update="no"
 
 # Get the path the script starts from
 
@@ -38,22 +38,20 @@ app_same=$(cd "$app_path" || exit ; grep "^# Name" "$0" |awk '{print $3}')
 app_pkgr=$(cd "$app_path" || exit ; grep "^# Packager" "$0" |awk '{for (i=3;i<=NF;++i) printf $i" "}')
 app_help=$(cd "$app_path" || exit ; grep -A1 " [A-Z,a-z])$" "$0" |sed "s/[#,\-\-]//g" |sed '/^\s*$/d')
 
-# Remote version file
-
-rem_vers_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/version"
-rem_app_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/$app_base"
-rem_vers_dir="/tmp/$app_same"
-
-if [ ! -d "$rem_vers_dir" ] ; then
-  mkdir "$rem_vers_dir"
-fi
-rem_vers_file="$rem_vers_dir/version"
+# Code to handle updates
 
 handle_vers() {
   echo "$@" |awk -F. '{ printf("%03d%03d%03d\n", $1,$2,$3); }';
 }
 
-self_update() {
+check_update() {
+rem_vers_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/version"
+rem_app_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/$app_base"
+rem_vers_dir="/tmp/$app_same"
+if [ ! -d "$rem_vers_dir" ] ; then
+  mkdir "$rem_vers_dir"
+fi
+rem_vers_file="$rem_vers_dir/version"
   printf "Checking $app_same is up to date... "
   if [ -f "$rem_vers_file" ] ; then
     rm "$rem_vers_file"
@@ -66,15 +64,12 @@ self_update() {
       if [ "$auto_update" = "yes" ] ; then
         echo "Updating $app_same"
         curl -s -o "$app_file" "$rem_app_url"
-        exec "$app_file" "$@"
       fi
     else
       printf "$app_same is up to date\n"
     fi
   fi
 }
-
-self_update
 
 # Set up directory for storing Slack hook etc
 
@@ -225,7 +220,7 @@ list_devices() {
 
 # Handle command line arguments
 
-while getopts "Vhsmlf" opt; do
+while getopts "Vhsmlfcu" opt; do
   case $opt in
     V)
       # Display Version
@@ -252,6 +247,16 @@ while getopts "Vhsmlf" opt; do
     l)
       # List devices
       do_list="yes"
+      ;;
+    c)
+      # Check of updated script
+      do_update="no"
+      check_update
+      ;;
+    u)
+      # Update script
+      do_update="yes"
+      check_update
       ;;
     *)
       print_help

@@ -101,3 +101,10 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 - Fri  1 Nov 2019 21:38:38 AEDT
   Cleaned up self update code
+
+### Changed
+
+### [0.1.4] = 2019-11-02
+
+- Sat  2 Nov 2019 02:58:58 AEDT
+  Cleaned up update code
