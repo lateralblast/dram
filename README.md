@@ -85,6 +85,10 @@ Usage Information:
        Email alerts
     l)
        List devices
+    c)
+       Check of updated script
+    u)
+       Update script
 ```
 
 
