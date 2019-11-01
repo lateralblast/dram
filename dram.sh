@@ -252,11 +252,13 @@ while getopts "Vhsmlfcu" opt; do
       # Check of updated script
       do_update="no"
       check_update
+      exit
       ;;
     u)
       # Update script
       do_update="yes"
       check_update
+      exit
       ;;
     *)
       print_help
