@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Name:         dram (Disk RAID Automated/Alert Monitoring)
-# Version:      0.1.2
+# Version:      0.1.3
 # Release:      1
 # License:      CC-BA (Creative Commons By Attribution)
 #               http://creativecommons.org/licenses/by/4.0/legalcode
@@ -22,7 +22,7 @@ do_list="no"
 do_email="no"
 do_false="no"
 megacli="/opt/MegaRAID/MegaCli/MegaCli64"
-auto_update="no"
+auto_update="yes"
 
 # Get the path the script starts from
 
@@ -42,6 +42,8 @@ app_help=$(cd "$app_path" || exit ; grep -A1 " [A-Z,a-z])$" "$0" |sed "s/[#,\-\-
 
 rem_vers_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/version"
 rem_app_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/$app_base"
+echo "$rem_app_url"
+exit
 rem_vers_dir="/tmp/$app_same"
 if [ ! -d "$rem_vers_dir" ] ; then
   mkdir "$rem_vers_dir"
@@ -64,7 +66,7 @@ self_update() {
       printf "Newer version of $app_same exists\n"
       if [ "$auto_update" = "yes" ] ; then
         echo "Updating $app_same"
-        curl -o "$rem_app_url" "$app_file"
+        curl -s -o "$app_file" "$rem_app_url"
         exec "$app_file" "$@"
         exit 1
       fi
