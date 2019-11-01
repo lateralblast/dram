@@ -68,7 +68,7 @@ Get usage information:
 
 ```
 ./dram.sh -h
-dram (Disk Raid Automated/Alert Monitoring)  0.0.4
+dram (Disk Raid Automated/Alert Monitoring)  0.1.4
 Richard Spindler <richard@lateralblast.com.au>
 
 Usage Information:
