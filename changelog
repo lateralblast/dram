@@ -73,4 +73,10 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 - Fri 25 Oct 2019 13:15:08 AEDT
   Added initial support for RPM based distros
-  
+
+### Added
+
+### [0.1.0] = 2019-11-01
+
+- Fri  1 Nov 2019 19:38:29 AEDT
+  Added self updating code

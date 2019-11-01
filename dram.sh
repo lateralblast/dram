@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Name:         dram (Disk RAID Automated/Alert Monitoring)
-# Version:      0.0.9
+# Version:      0.1.0
 # Release:      1
 # License:      CC-BA (Creative Commons By Attribution)
 #               http://creativecommons.org/licenses/by/4.0/legalcode
@@ -13,6 +13,31 @@
 # Packager:     Richard Spindler <richard@lateralblast.com.au>
 # Description:  Shell script
 #               Written in bash so it can be run on different releases
+
+# Check if script has an update
+
+script_file=$(readlink -f "$0")
+script_path=$(dirname "$script")
+script_name="$0"
+script_args="$@"
+scriot_branch="master"
+
+self_update() {
+  cd $script_path
+  git fetch
+  [ -n $(git diff --name-only origin/$script_branch | grep $script_name) ] && {
+    echo "Found a new version, updating..."
+    git pull --force
+    git checkout $script_branch
+    git pull --force
+    exec "$script_name" "$@"
+    # Now exit this old instance
+    exit 1
+  }
+  echo "Already the latest version."
+}
+
+self_update
 
 # Set some defaults
 
