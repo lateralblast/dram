@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Name:         dram (Disk RAID Automated/Alert Monitoring)
-# Version:      0.1.0
+# Version:      0.1.1
 # Release:      1
 # License:      CC-BA (Creative Commons By Attribution)
 #               http://creativecommons.org/licenses/by/4.0/legalcode
@@ -14,31 +14,6 @@
 # Description:  Shell script
 #               Written in bash so it can be run on different releases
 
-# Check if script has an update
-
-script_file=$(readlink -f "$0")
-script_path=$(dirname "$script")
-script_name="$0"
-script_args="$@"
-scriot_branch="master"
-
-self_update() {
-  cd $script_path
-  git fetch
-  [ -n $(git diff --name-only origin/$script_branch | grep $script_name) ] && {
-    echo "Found a new version, updating..."
-    git pull --force
-    git checkout $script_branch
-    git pull --force
-    exec "$script_name" "$@"
-    # Now exit this old instance
-    exit 1
-  }
-  echo "Already the latest version."
-}
-
-self_update
-
 # Set some defaults
 
 host_name=$(hostname)
@@ -47,17 +22,56 @@ do_list="no"
 do_email="no"
 do_false="no"
 megacli="/opt/MegaRAID/MegaCli/MegaCli64"
+auto_update="no"
 
 # Get the path the script starts from
 
-start_path=$(pwd)
+app_file="$0"
+app_path=$(dirname "$app_file")
+app_base=$(basename "$app_file")
 
 # Get the script info from the script itself
 
-app_vers=$(cd "$start_path" || exit ; grep "^# Version" "$0" |awk '{print $3}')
-app_name=$(cd "$start_path" || exit ; grep "^# Name" "$0" |awk '{for (i=3;i<=NF;++i) printf $i" "}')
-app_pkgr=$(cd "$start_path" || exit ; grep "^# Packager" "$0" |awk '{for (i=3;i<=NF;++i) printf $i" "}')
-app_help=$(cd "$start_path" || exit ; grep -A1 " [A-Z,a-z])$" "$0" |sed "s/[#,\-\-]//g" |sed '/^\s*$/d')
+app_vers=$(cd "$app_path" || exit ; grep "^# Version" "$0" |awk '{print $3}')
+app_name=$(cd "$app_path" || exit ; grep "^# Name" "$0" |awk '{for (i=3;i<=NF;++i) printf $i" "}')
+app_pkgr=$(cd "$app_path" || exit ; grep "^# Packager" "$0" |awk '{for (i=3;i<=NF;++i) printf $i" "}')
+app_help=$(cd "$app_path" || exit ; grep -A1 " [A-Z,a-z])$" "$0" |sed "s/[#,\-\-]//g" |sed '/^\s*$/d')
+
+# Remote version file
+
+rem_vers_url="https://raw.githubusercontent.com/lateralblast/$app_name/master/version"
+rem_app_url="https://raw.githubusercontent.com/lateralblast/$app_name/master/$app_base"
+rem_vers_dir="/tmp/$app_name"
+if [ ! -d "$rem_vers_dir" ] ; then
+  mkdir "$rem_vers_dir"
+fi
+rem_vers_file="$rem_vers_dir/version"
+
+handle_vers() {
+  echo "$@" |awk -F. '{ printf("%03d%03d%03d\n", $1,$2,$3); }';
+}
+
+self_update() {
+  echo "Checking $app_name is up to date"
+  rm "$rem_vers_file"
+  curl -o "$rem_vers_file" "$rem_vers_url"
+  if [ -f "$rem_vers_file" ] ; then
+    rem_vers=$(cat "$rem_ver_file")
+    if [ "$(handle_vers "$rem_vers")" -gt "$(handle_vers "$app_vers")" ]; then
+      echo "Newer version of $app_name exists"
+      if [ "$auto_update" = "yes" ] ; then
+        echo "Updating $app_name"
+        curl -o "$rem_app_url" "$app_file"
+        exec "$app_file" "$@"
+        exit 1
+      fi
+    else
+      echo "$app_name is up to date"
+    fi
+  fi
+}
+
+self_update
 
 # Set up directory for storing Slack hook etc
 
