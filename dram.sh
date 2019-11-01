@@ -43,6 +43,7 @@ app_help=$(cd "$app_path" || exit ; grep -A1 " [A-Z,a-z])$" "$0" |sed "s/[#,\-\-
 rem_vers_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/version"
 rem_app_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/$app_base"
 rem_vers_dir="/tmp/$app_same"
+
 if [ ! -d "$rem_vers_dir" ] ; then
   mkdir "$rem_vers_dir"
 fi
