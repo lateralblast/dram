@@ -66,7 +66,7 @@ self_update() {
       if [ "$auto_update" = "yes" ] ; then
         echo "Updating $app_same"
         curl -s -o "$app_file" "$rem_app_url"
-        exec "$app_file" "$@"
+        "$app_file" "$@"
       fi
     else
       printf "$app_same is up to date\n"
