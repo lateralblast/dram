@@ -45,6 +45,7 @@ handle_vers() {
 }
 
 check_update() {
+  do_update=$1
   rem_vers_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/version"
   rem_app_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/$app_base"
   rem_vers_dir="/tmp/$app_same"
@@ -61,7 +62,7 @@ check_update() {
     rem_vers=$(cat "$rem_vers_file")
     if [ "$(handle_vers "$rem_vers")" -gt "$(handle_vers "$app_vers")" ]; then
       printf "Newer version of $app_same exists\n"
-      if [ "$auto_update" = "yes" ] ; then
+      if [ "$do_update" = "yes" ] ; then
         echo "Updating $app_same"
         curl -s -o "$app_file" "$rem_app_url"
       fi
@@ -251,13 +252,13 @@ while getopts "VhsmlfUu" opt; do
     u)
       # Check of updated script
       do_update="no"
-      check_update
+      check_update $do_update
       exit
       ;;
     U)
       # Update script
       do_update="yes"
-      check_update
+      check_update $do_update
       exit
       ;;
     *)
