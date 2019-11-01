@@ -67,7 +67,6 @@ self_update() {
         echo "Updating $app_same"
         curl -s -o "$app_file" "$rem_app_url"
         exec "$app_file" "$@"
-        exit 1
       fi
     else
       printf "$app_same is up to date\n"
