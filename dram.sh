@@ -45,13 +45,13 @@ handle_vers() {
 }
 
 check_update() {
-rem_vers_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/version"
-rem_app_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/$app_base"
-rem_vers_dir="/tmp/$app_same"
-if [ ! -d "$rem_vers_dir" ] ; then
-  mkdir "$rem_vers_dir"
-fi
-rem_vers_file="$rem_vers_dir/version"
+  rem_vers_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/version"
+  rem_app_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/$app_base"
+  rem_vers_dir="/tmp/$app_same"
+  if [ ! -d "$rem_vers_dir" ] ; then
+    mkdir "$rem_vers_dir"
+  fi
+  rem_vers_file="$rem_vers_dir/version"
   printf "Checking $app_same is up to date... "
   if [ -f "$rem_vers_file" ] ; then
     rm "$rem_vers_file"
