@@ -220,7 +220,7 @@ list_devices() {
 
 # Handle command line arguments
 
-while getopts "Vhsmlfcu" opt; do
+while getopts "VhsmlfUu" opt; do
   case $opt in
     V)
       # Display Version
@@ -248,13 +248,13 @@ while getopts "Vhsmlfcu" opt; do
       # List devices
       do_list="yes"
       ;;
-    c)
+    u)
       # Check of updated script
       do_update="no"
       check_update
       exit
       ;;
-    u)
+    U)
       # Update script
       do_update="yes"
       check_update
