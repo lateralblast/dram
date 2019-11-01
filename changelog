@@ -87,3 +87,10 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 - Fri  1 Nov 2019 21:09:27 AEDT
   Changed self update code
+
+### Changed
+
+### [0.1.2] = 2019-11-01
+
+- Fri  1 Nov 2019 21:31:06 AEDT
+  Cleaned up self update code

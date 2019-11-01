@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Name:         dram (Disk RAID Automated/Alert Monitoring)
-# Version:      0.1.1
+# Version:      0.1.2
 # Release:      1
 # License:      CC-BA (Creative Commons By Attribution)
 #               http://creativecommons.org/licenses/by/4.0/legalcode
@@ -33,15 +33,16 @@ app_base=$(basename "$app_file")
 # Get the script info from the script itself
 
 app_vers=$(cd "$app_path" || exit ; grep "^# Version" "$0" |awk '{print $3}')
-app_name=$(cd "$app_path" || exit ; grep "^# Name" "$0" |awk '{for (i=3;i<=NF;++i) printf $i" "}')
+app_name=$(cd "$app_path" || exit ; grep "^# Name" "$0" |awk '{for (i=3;i<=NF;++i) printf $i" "}' |sed 's/ $//g')
+app_same=$(cd "$app_path" || exit ; grep "^# Name" "$0" |awk '{print $3}')
 app_pkgr=$(cd "$app_path" || exit ; grep "^# Packager" "$0" |awk '{for (i=3;i<=NF;++i) printf $i" "}')
 app_help=$(cd "$app_path" || exit ; grep -A1 " [A-Z,a-z])$" "$0" |sed "s/[#,\-\-]//g" |sed '/^\s*$/d')
 
 # Remote version file
 
-rem_vers_url="https://raw.githubusercontent.com/lateralblast/$app_name/master/version"
-rem_app_url="https://raw.githubusercontent.com/lateralblast/$app_name/master/$app_base"
-rem_vers_dir="/tmp/$app_name"
+rem_vers_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/version"
+rem_app_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/$app_base"
+rem_vers_dir="/tmp/$app_same"
 if [ ! -d "$rem_vers_dir" ] ; then
   mkdir "$rem_vers_dir"
 fi
@@ -52,21 +53,23 @@ handle_vers() {
 }
 
 self_update() {
-  echo "Checking $app_name is up to date"
-  rm "$rem_vers_file"
-  curl -o "$rem_vers_file" "$rem_vers_url"
+  printf "Checking $app_same is up to date... "
   if [ -f "$rem_vers_file" ] ; then
-    rem_vers=$(cat "$rem_ver_file")
+    rm "$rem_vers_file"
+  fi
+  curl -s -o "$rem_vers_file" "$rem_vers_url"
+  if [ -f "$rem_vers_file" ] ; then
+    rem_vers=$(cat "$rem_vers_file")
     if [ "$(handle_vers "$rem_vers")" -gt "$(handle_vers "$app_vers")" ]; then
-      echo "Newer version of $app_name exists"
+      printf "Newer version of $app_same exists\n"
       if [ "$auto_update" = "yes" ] ; then
-        echo "Updating $app_name"
+        echo "Updating $app_same"
         curl -o "$rem_app_url" "$app_file"
         exec "$app_file" "$@"
         exit 1
       fi
     else
-      echo "$app_name is up to date"
+      printf "$app_same is up to date\n"
     fi
   fi
 }
