@@ -21,7 +21,7 @@ do_slack="no"
 do_list="no"
 do_email="no"
 do_false="no"
-megacli="/opt/sbin/megacli"
+megacli="/usr/sbin/megacli"
 do_update="no"
 
 # Get the path the script starts from
