@@ -21,7 +21,7 @@ do_slack="no"
 do_list="no"
 do_email="no"
 do_false="no"
-megacli="/opt/MegaRAID/MegaCli/MegaCli64"
+megacli="/opt/sbin/megacli"
 do_update="no"
 
 # Get the path the script starts from
@@ -88,7 +88,7 @@ fi
 
 # Work out which package manager to use
 
-if [ -f "/etc/redhat-release" ]; then
+if [ -f "/etc/redhat-release" ] ; then
   pkg_bin="yum"
 else
   pkg_bin="apt-get"
@@ -121,21 +121,23 @@ print_help() {
 
 lsi_install_check() {
   if [ ! -f "$megacli" ]; then
-    cd /tmp || exit
-    if [ ! -f "/tmp/8-07-14_MegaCLI.zip" ]; then
-      wget https://docs.broadcom.com/docs-and-downloads/raid-controllers/raid-controllers-common-files/8-07-14_MegaCLI.zip
-    fi
-    unzip 8-07-14_MegaCLI.zip
-    cd Linux || exit
-    if [ "$pkg_bin" = "yum" ] ; then
-      sudo $pkg_bin -i MegaCli-8.07.14-1.noarch.rpm
+    if [ -f "/etc/redhat-release" ] ; then
+      cd /tmp || exit
+      if [ ! -f "/tmp/8-07-14_MegaCLI.zip" ]; then
+        wget https://docs.broadcom.com/docs-and-downloads/raid-controllers/raid-controllers-common-files/8-07-14_MegaCLI.zip
+      fi
+      unzip 8-07-14_MegaCLI.zip
+      cd Linux || exit
+      sudo rpm -i MegaCli-8.07.14-1.noarch.rpm
+      if [ ! -e "$megacli" ];  then
+        sudo sh -c "ln -s /opt/MegaRAID/MegaCli/MegaCli64 $megacli"
+      fi
     else
-      alien MegaCli-8.07.14-1.noarch.rpm
-      sudo $pkg_bin -i megacli_8.07.14-2_all.deb
+      if [ ! -f "/tmp/megacli_8.07.14-2%2BDebian.stretch.9.9_amd64.deb" ] ; then
+        wget http://hwraid.le-vert.net/debian/pool-stretch/megacli/{megacli_8.07.14-2%2BDebian.stretch.9.9_amd64.deb
+      fi
+      sudo dpkg -i /tmp/megacli_8.07.14-2%2BDebian.stretch.9.9_amd64.deb
     fi
-  fi
-  if [ ! -e "/usr/bin/megacli" ];  then
-    sudo sh -c "ln -s $megacli /usr/bin/megacli"
   fi
   return
 }
@@ -144,11 +146,6 @@ lsi_install_check() {
 
 install_check() {
   os_check
-  if [ ! "$pkg_bin" = "yum" ] ; then
-    if [ -z "$(command -v alien)" ]; then
-      sudo $pkg_bin install -y alien
-    fi
-  fi
   if [ -z "$(command -v unzip)" ]; then
     sudo $pkg_bin install -y unzip
   fi

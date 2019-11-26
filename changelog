@@ -32,79 +32,87 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 - Fri 18 Oct 2019 14:24:48 AEDT
   Moved email and Slack alert information to files so addresses are not in script  
 
-### Changed
-
 ## [0.0.5] - 2019-10-20
+
+### Changed
 
 - Sun 20 Oct 15:35:29 AEDT 2019
   Implemented shellcheck recommendation
 
-### Added
-
 ## [0.0.5] - 2019-10-20
+
+### Added
 
 - Sun 20 Oct 15:38:25 AEDT 2019
   Added download of megaclisas-status with intention to replace lshw as lshw seems unreliable
 
-### Changed
-
 ## [0.0.6] - 2019-10-21
+
+### Changed
 
 - Mon 21 Oct 2019 22:29:57 AEDT
   Replaced megaclisas-status with lsscsi
 
-### Changed
+## [0.0.7] - 2019-10-22
 
-### [0.0.7] - 2019-10-22
+### Changed
 
 - Tue 22 Oct 2019 09:38:27 AEDT
   Started breaking out install check into controller specific checks
 
-### Added
+## [0.0.8] - 2019-10-24
 
-### [0.0.8] - 2019-10-24
+### Added
 
 - Thu 24 Oct 2019 14:14:59 AEDT
   Added initial support for LSI based ServeRAID and Intel controllers
 
-### Added
+## [0.0.9] - 2019-10-25
 
-### [0.0.9] = 2019-10-25
+### Added
 
 - Fri 25 Oct 2019 13:15:08 AEDT
   Added initial support for RPM based distros
 
-### Added
+## [0.1.0] - 2019-11-01
 
-### [0.1.0] = 2019-11-01
+### Added
 
 - Fri  1 Nov 2019 19:38:29 AEDT
   Added self updating code
 
-### Changed
+## [0.1.1] - 2019-11-01
 
-### [0.1.1] = 2019-11-01
+### Changed
 
 - Fri  1 Nov 2019 21:09:27 AEDT
   Changed self update code
 
-### Changed
+## [0.1.2] - 2019-11-01
 
-### [0.1.2] = 2019-11-01
+### Changed
 
 - Fri  1 Nov 2019 21:31:06 AEDT
   Cleaned up self update code
 
-### Changed
+## [0.1.3] - 2019-11-01
 
-### [0.1.3] = 2019-11-01
+### Changed
 
 - Fri  1 Nov 2019 21:38:38 AEDT
   Cleaned up self update code
 
-### Changed
+## [0.1.4] - 2019-11-02
 
-### [0.1.4] = 2019-11-02
+### Changed
 
 - Sat  2 Nov 2019 02:58:58 AEDT
   Cleaned up update code
+
+## [0.1.5] - 2019-11-26
+
+### Changed
+
+- Tue 26 Nov 2019 12:02:11 AEDT
+  Updated Ubuntu support
+  
