@@ -206,7 +206,7 @@ list_devices() {
           handle_alert "$device"
         else
           if echo "$info" |grep "^Stat" |grep "Optimal"; then
-            ;;
+            :
           else
             handle_alert "$device"
           fi
