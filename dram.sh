@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Name:         dram (Disk RAID Automated/Alert Monitoring)
-# Version:      0.1.5
+# Version:      0.1.6
 # Release:      1
 # License:      CC-BA (Creative Commons By Attribution)
 #               http://creativecommons.org/licenses/by/4.0/legalcode
@@ -201,11 +201,13 @@ list_devices() {
       echo "Filesystem: $fstab"
     fi
     sudo sh -c "$megacli -LDInfo -L\"$devnum\" -aAll |sed \"s/: /:/g\" |grep \":\" |grep -Ev \"^Adapter|^Exit\" |tr -s '[:blank:]' ' ' |sed \"s/ :/:/g\" |sed \"s/:/: /g\"" |while read -r info; do
-      if echo "$info" |grep "^State" ; then
-        if echo "$info" |grep "^State" |grep "Optimal"; then
+      if echo "$info" |grep "^Stat" ; then
+        if [ "$do_false" = "yes" ]; then
           handle_alert "$device"
         else
-          if [ "$do_false" = "yes" ]; then
+          if echo "$info" |grep "^Stat" |grep "Optimal"; then
+            ;;
+          else
             handle_alert "$device"
           fi
         fi

@@ -12,6 +12,10 @@ A simple shell script for monitoring RAID devices.
 
 Why a shell script? To minimise the number of additional packages needed.
 
+The URL for the Slack Webhook is kept in ~/.dram/slack_hook_file.
+
+The email list for the email alerts is kept in ~/.dram/email_list_file.
+
 Features
 --------
 
@@ -53,6 +57,10 @@ The script will attempt to install required supported packages if they are not a
   - alien (to convert LSI MegaCLI RPM)
   - unzip
   - lsscsi
+
+You can create Slack Webhooks here:
+
+https://api.slack.com/messaging/webhooks
 
 License
 -------

@@ -115,4 +115,11 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 - Tue 26 Nov 2019 12:02:11 AEDT
   Updated Ubuntu support
+
+## [0.1.6] - 2019-12-15
+
+### Changed
+
+- Sun 15 Dec 08:49:16 AEDT 2019
+  Fixed false alerting and updated README
   
