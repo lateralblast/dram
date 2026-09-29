@@ -65,9 +65,9 @@ https://api.slack.com/messaging/webhooks
 License
 -------
 
-This software is licensed as CC-BA (Creative Commons By Attrbution)
+This software is licensed as CC BY-NC-SA (Creative Commons Attribution-NonCommercial-ShareAlike 4.0). See [LICENSE](LICENSE).
 
-http://creativecommons.org/licenses/by/4.0/legalcode
+http://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
 
 Usage
 -----
@@ -116,3 +116,10 @@ List devices and send false alerts to Slack:
 ```
 ./dram.sh -l -f -s
 ```
+
+Help Support Development
+------------------------
+
+If you find this software useful and would like to support its development, please consider buying me a coffee:
+
+https://ko-fi.com/richardatlateralblast

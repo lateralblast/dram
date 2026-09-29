@@ -1,0 +1,16 @@
+# dram is a shell script with no Python dependencies.
+# This file lists the system packages it needs; it is not for pip.
+# dram.sh installs the ones marked (auto) itself if they are missing.
+
+# Ubuntu / Debian
+sudo
+curl            # self update and Slack alerts
+wget            # MegaCLI download
+unzip           # (auto)
+lsscsi          # (auto)
+mailutils       # (auto) email alerts, provides mail
+lvm2            # pvscan/lvscan for filesystem lookup
+megacli         # (auto) LSI MegaCLI 8.07.14, installed at /usr/sbin/megacli
+
+# RHEL / CentOS (uses yum; MegaCLI installed from the Broadcom RPM)
+# sudo curl wget unzip lsscsi mailx lvm2 rpm

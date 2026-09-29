@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # Name:         dram (Disk RAID Automated/Alert Monitoring)
-# Version:      0.1.6
+# Version:      0.2.6
 # Release:      1
-# License:      CC-BA (Creative Commons By Attribution)
-#               http://creativecommons.org/licenses/by/4.0/legalcode
+# License:      CC BY-NC-SA (Creative Commons Attribution-NonCommercial-ShareAlike)
+#               http://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
 # Group:        System
 # Source:       N/A
 # URL:          http://lateralblast.com.au/
@@ -26,78 +26,85 @@ do_update="no"
 
 # Get the path the script starts from
 
-app_file="$0"
-app_path=$(dirname "$app_file")
-app_base=$(basename "$app_file")
+app_file="${0}"
+app_path=$(dirname "${app_file}")
+app_base=$(basename "${app_file}")
 
 # Get the script info from the script itself
 
-app_vers=$(cd "$app_path" || exit ; grep "^# Version" "$0" |awk '{print $3}')
-app_name=$(cd "$app_path" || exit ; grep "^# Name" "$0" |awk '{for (i=3;i<=NF;++i) printf $i" "}' |sed 's/ $//g')
-app_same=$(cd "$app_path" || exit ; grep "^# Name" "$0" |awk '{print $3}')
-app_pkgr=$(cd "$app_path" || exit ; grep "^# Packager" "$0" |awk '{for (i=3;i<=NF;++i) printf $i" "}')
-app_help=$(cd "$app_path" || exit ; grep -A1 " [A-Z,a-z])$" "$0" |sed "s/[#,\-\-]//g" |sed '/^\s*$/d')
+app_vers=$(cd "${app_path}" || exit ; grep "^# Version" "${0}" |awk '{print $3}')
+app_name=$(cd "${app_path}" || exit ; grep "^# Name" "${0}" |awk '{for (i=3;i<=NF;++i) printf $i" "}' |sed 's/ $//g')
+app_same=$(cd "${app_path}" || exit ; grep "^# Name" "${0}" |awk '{print $3}')
+app_pkgr=$(cd "${app_path}" || exit ; grep "^# Packager" "${0}" |awk '{for (i=3;i<=NF;++i) printf $i" "}')
+app_help=$(cd "${app_path}" || exit ; grep -A1 " [A-Z,a-z])$" "${0}" |sed "s/[#,\-\-]//g" |sed '/^\s*$/d')
 
 # Code to handle updates
 
 handle_vers() {
-  echo "$@" |awk -F. '{ printf("%03d%03d%03d\n", $1,$2,$3); }';
+  echo "${@}" |awk -F. '{ printf("%03d%03d%03d\n", $1,$2,$3); }';
 }
 
 check_update() {
-  do_update=$1
-  rem_vers_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/version"
-  rem_app_url="https://raw.githubusercontent.com/lateralblast/$app_same/master/$app_base"
-  rem_vers_dir="/tmp/$app_same"
-  if [ ! -d "$rem_vers_dir" ] ; then
-    mkdir "$rem_vers_dir"
+  do_update=${1}
+  rem_vers_url="https://raw.githubusercontent.com/lateralblast/${app_same}/master/version"
+  rem_app_url="https://raw.githubusercontent.com/lateralblast/${app_same}/master/${app_base}"
+  rem_vers_dir="/tmp/${app_same}"
+  if [ ! -d "${rem_vers_dir}" ] ; then
+    mkdir "${rem_vers_dir}"
   fi
-  rem_vers_file="$rem_vers_dir/version"
-  printf "Checking %s is up to date... " "$app_same"
-  if [ -f "$rem_vers_file" ] ; then
-    rm "$rem_vers_file"
+  rem_vers_file="${rem_vers_dir}/version"
+  printf "Checking %s is up to date... " "${app_same}"
+  if [ -f "${rem_vers_file}" ] ; then
+    rm "${rem_vers_file}"
   fi
-  curl -s -o "$rem_vers_file" "$rem_vers_url"
-  if [ -f "$rem_vers_file" ] ; then
-    rem_vers=$(cat "$rem_vers_file")
-    if [ "$(handle_vers "$rem_vers")" -gt "$(handle_vers "$app_vers")" ]; then
-      printf "Newer version of %s exists\n" "$app_same"
-      if [ "$do_update" = "yes" ] ; then
-        echo "Updating $app_same"
-        curl -s -o "$app_file" "$rem_app_url"
+  curl -sf -o "${rem_vers_file}" "${rem_vers_url}"
+  if [ -f "${rem_vers_file}" ] ; then
+    rem_vers=$(cat "${rem_vers_file}")
+    if [ "$(handle_vers "${rem_vers}")" -gt "$(handle_vers "${app_vers}")" ]; then
+      printf "Newer version of %s exists\n" "${app_same}"
+      if [ "${do_update}" = "yes" ] ; then
+        echo "Updating ${app_same}"
+        rem_app_file="${rem_vers_dir}/${app_base}"
+        if curl -sf -o "${rem_app_file}" "${rem_app_url}" && head -1 "${rem_app_file}" |grep -q "^#!" ; then
+          cat "${rem_app_file}" > "${app_file}"
+        else
+          echo "Warning: download failed, ${app_file} not updated"
+        fi
       fi
     else
-      printf "%s is up to date\n" "$app_same"
+      printf "%s is up to date\n" "${app_same}"
     fi
   fi
 }
 
 # Set up directory for storing Slack hook etc
 
-home_dir=$HOME
-dram_dir="$home_dir/.dram"
-slack_file="$dram_dir/slack_hook_file"
-email_file="$dram_dir/email_list_file"
+home_dir=${HOME}
+dram_dir="${home_dir}/.dram"
+slack_file="${dram_dir}/slack_hook_file"
+email_file="${dram_dir}/email_list_file"
 os_name=$(uname)
 
 # Create config directory if not present
 
-if [ ! -d "$dram_dir" ]; then
-  mkdir -p "$dram_dir"
+if [ ! -d "${dram_dir}" ]; then
+  mkdir -p "${dram_dir}"
 fi
 
 # Work out which package manager to use
 
 if [ -f "/etc/redhat-release" ] ; then
   pkg_bin="yum"
+  mail_pkg="mailx"
 else
   pkg_bin="apt-get"
+  mail_pkg="mailutils"
 fi
 
 # Check we are running on a supported OS
 
 os_check() {
-  if [ ! "$os_name" = "Linux" ] ; then
+  if [ ! "${os_name}" = "Linux" ] ; then
     echo "Currently only Linux is supported"
     exit
   fi
@@ -107,12 +114,12 @@ os_check() {
 # Print some help
 
 print_help() {
-  echo "$app_name $app_vers"
-  echo "$app_pkgr"
+  echo "${app_name} ${app_vers}"
+  echo "${app_pkgr}"
   echo ""
   echo "Usage Information:"
   echo ""
-  echo "$app_help"
+  echo "${app_help}"
   echo ""
   return
 }
@@ -120,7 +127,7 @@ print_help() {
 # LSI install check
 
 lsi_install_check() {
-  if [ ! -f "$megacli" ]; then
+  if [ ! -f "${megacli}" ]; then
     if [ -f "/etc/redhat-release" ] ; then
       cd /tmp || exit
       if [ ! -f "/tmp/8-07-14_MegaCLI.zip" ]; then
@@ -129,12 +136,12 @@ lsi_install_check() {
       unzip 8-07-14_MegaCLI.zip
       cd Linux || exit
       sudo rpm -i MegaCli-8.07.14-1.noarch.rpm
-      if [ ! -e "$megacli" ];  then
-        sudo sh -c "ln -s /opt/MegaRAID/MegaCli/MegaCli64 $megacli"
+      if [ ! -e "${megacli}" ];  then
+        sudo sh -c "ln -s /opt/MegaRAID/MegaCli/MegaCli64 ${megacli}"
       fi
     else
       if [ ! -f "/tmp/megacli_8.07.14-2%2BDebian.stretch.9.9_amd64.deb" ] ; then
-        wget http://hwraid.le-vert.net/debian/pool-stretch/megacli/{megacli_8.07.14-2%2BDebian.stretch.9.9_amd64.deb
+        wget https://hwraid.le-vert.net/debian/pool-stretch/megacli/megacli_8.07.14-2%2BDebian.stretch.9.9_amd64.deb
       fi
       sudo dpkg -i /tmp/megacli_8.07.14-2%2BDebian.stretch.9.9_amd64.deb
     fi
@@ -147,13 +154,13 @@ lsi_install_check() {
 install_check() {
   os_check
   if [ -z "$(command -v unzip)" ]; then
-    sudo $pkg_bin install -y unzip
+    sudo ${pkg_bin} install -y unzip
   fi
   if [ -z "$(command -v mail)" ]; then
-    sudo $pkg_bin install -y mailutils
+    sudo ${pkg_bin} install -y ${mail_pkg}
   fi
   if [ -z "$(command -v lsscsi)" ]; then
-    sudo $pkg_bin install -y lsscsi
+    sudo ${pkg_bin} install -y lsscsi
   fi
   return
 }
@@ -161,12 +168,12 @@ install_check() {
 # Handle alert
 
 handle_alert() {
-  device=$1
-  if [ "$do_slack" = "yes" ]; then
-    curl -X POST -H 'Content-type: application/json' --data "{'text':'Warning $device on $host_name is not optimal'}" "$slack_hook"
+  device=${1}
+  if [ "${do_slack}" = "yes" ]; then
+    curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"Warning ${device} on ${host_name} is not optimal\"}" "${slack_hook}"
   fi
-  if [ "$do_email" = "yes" ]; then
-    echo "Warning $device on $host_name is not Optimal" | mail -s "Warning $device on $host_name is not optimal" "$alert_email"
+  if [ "${do_email}" = "yes" ]; then
+    echo "Warning ${device} on ${host_name} is not Optimal" | mail -s "Warning ${device} on ${host_name} is not optimal" "${alert_email}"
   fi
   return
 }
@@ -176,43 +183,43 @@ handle_alert() {
 list_devices() {
   install_check
   sudo sh -c "lsscsi -d |grep -Ei \"PERC|RAID\" |awk '{print \$1\":\"\$7}' |sed 's/\[//g' |sed 's/\]//g'" | while read -r line ; do
-    if echo "$line" |grep -Ei "PERC|MegaRAID|RD2|TD2|TS4"; then
+    if echo "${line}" |grep -qEi "PERC|MegaRAID|RD2|TD2|TS4"; then
       lsi_install_check
     else
-      if echo "$line" |grep -Ei "ServeRAID"; then
-        if echo "$line" |grep -Ei "M51|M50|M10|MR10"; then
+      if echo "${line}" |grep -qEi "ServeRAID"; then
+        if echo "${line}" |grep -qEi "M51|M50|M10|MR10"; then
           lsi_install_check
         fi
       fi
     fi
-    devnum=$(echo "$line" |cut -f3 -d:)
-    device=$(echo "$line" |cut -f5 -d:)
-    fstab=$(grep "$device" /etc/fstab || exit)
-    echo "Device: $device"
-    if [ -z "$fstab" ]; then
+    devnum=$(echo "${line}" |cut -f3 -d:)
+    device=$(echo "${line}" |cut -f5 -d:)
+    fstab=$(grep "${device}" /etc/fstab)
+    echo "Device: ${device}"
+    if [ -z "${fstab}" ]; then
       printf "Filesystem: "
-      sudo sh -c "pvscan |grep \"$device\" |awk '{print \$4}'" |while read -r volume; do
-        sudo sh -c "lvscan |grep \"$volume\" |awk '{print \$2}'" |sed "s/'//g" |while read -r entry; do
-          printf "%s " "$entry"
+      sudo sh -c "pvscan |grep \"${device}\" |awk '{print \$4}'" |while read -r volume; do
+        sudo sh -c "lvscan |grep \"${volume}\" |awk '{print \$2}'" |sed "s/'//g" |while read -r entry; do
+          printf "%s " "${entry}"
         done
       done
       printf "\n"
     else
-      echo "Filesystem: $fstab"
+      echo "Filesystem: ${fstab}"
     fi
-    sudo sh -c "$megacli -LDInfo -L\"$devnum\" -aAll |sed \"s/: /:/g\" |grep \":\" |grep -Ev \"^Adapter|^Exit\" |tr -s '[:blank:]' ' ' |sed \"s/ :/:/g\" |sed \"s/:/: /g\"" |while read -r info; do
-      if echo "$info" |grep "^Stat" ; then
-        if [ "$do_false" = "yes" ]; then
-          handle_alert "$device"
+    sudo sh -c "${megacli} -LDInfo -L\"${devnum}\" -aAll |sed \"s/: /:/g\" |grep \":\" |grep -Ev \"^Adapter|^Exit\" |tr -s '[:blank:]' ' ' |sed \"s/ :/:/g\" |sed \"s/:/: /g\"" |while read -r info; do
+      if echo "${info}" |grep -q "^Stat" ; then
+        if [ "${do_false}" = "yes" ]; then
+          handle_alert "${device}"
         else
-          if echo "$info" |grep "^Stat" |grep "Optimal"; then
+          if echo "${info}" |grep "^Stat" |grep -q "Optimal"; then
             :
           else
-            handle_alert "$device"
+            handle_alert "${device}"
           fi
         fi
       fi
-      echo "$info"
+      echo "${info}"
     done
   done
   return
@@ -221,10 +228,10 @@ list_devices() {
 # Handle command line arguments
 
 while getopts "VhsmlfUu" opt; do
-  case $opt in
+  case ${opt} in
     V)
       # Display Version
-      echo "$app_vers"
+      echo "${app_vers}"
       exit
       ;;
     f)
@@ -251,13 +258,13 @@ while getopts "VhsmlfUu" opt; do
     u)
       # Check of updated script
       do_update="no"
-      check_update $do_update
+      check_update ${do_update}
       exit
       ;;
     U)
       # Update script
       do_update="yes"
-      check_update $do_update
+      check_update ${do_update}
       exit
       ;;
     *)
@@ -269,36 +276,36 @@ done
 
 # Handle Slack hook
 
-if [ "$do_slack" = "yes" ]; then
-  if [ -f "$slack_file" ] ; then
-    slack_hook=$(cat "$slack_file")
+if [ "${do_slack}" = "yes" ]; then
+  if [ -f "${slack_file}" ] ; then
+    slack_hook=$(cat "${slack_file}")
   else
-    echo "Warning Slack hook file $slack_file does not exist"
-    exit
+    echo "Warning Slack hook file ${slack_file} does not exist"
+    exit 1
   fi
 fi
 
 #Handle alert email address
 
-if [ "$do_email" = "yes" ]; then
-  if [ -f "$email_file" ] ; then
-    alert_email=$(cat "$email_file")
+if [ "${do_email}" = "yes" ]; then
+  if [ -f "${email_file}" ] ; then
+    alert_email=$(cat "${email_file}")
   else
-    echo "Warning email alert list file $email_file does not exist"
-    exit
+    echo "Warning email alert list file ${email_file} does not exist"
+    exit 1
   fi
 fi
 
 # Handle list
 
-if [ "$do_list" = "yes" ]; then
+if [ "${do_list}" = "yes" ]; then
   list_devices
   exit
 fi
 
 # If given no command line arguments print usage information
 
-if expr "$opt" : "\-" != 1; then
+if [ "${do_list}" != "yes" ]; then
   print_help
   exit
 fi
